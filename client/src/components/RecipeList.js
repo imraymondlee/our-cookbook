@@ -1,30 +1,25 @@
-import React, {Component} from 'react';
-import {graphql} from 'react-apollo';
+import React from 'react';
 import {getRecipesQuery} from '../queries/queries';
+import { useQuery } from '@apollo/react-hooks';
 
-class RecipeList extends Component {
-  displayRecipes() {
-    var data = this.props.data;
-    if(data.loading) {
-      return (<div>Loading recipes...</div>);
-    } else {
-      return data.recipes.map(recipe => {
-        return (
-          <li key={recipe.id}>{recipe.name}</li>
-        );
-      })
-    }
-  }
+const RecipeList = () => {
+  const { data, loading, error } = useQuery(getRecipesQuery);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>ERROR</p>;
 
-  render() {
-    return (
-      <div>
-        <ul>
-          {this.displayRecipes()}       
-        </ul>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <ul>
+        {
+          data.recipes.map(recipe => {
+            return(
+              <li key={recipe.id}>{recipe.name}</li>
+            );
+          })
+        }  
+      </ul>
+    </div>
+  );
 }
 
-export default graphql(getRecipesQuery)(RecipeList);
+export default RecipeList;

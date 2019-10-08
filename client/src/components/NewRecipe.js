@@ -1,65 +1,31 @@
-import React from 'react';
-import {graphql} from 'react-apollo';
-import {addRecipeMutation} from '../queries/queries';
+import React, {useState} from 'react';
+import {addRecipeMutation, getRecipesQuery} from '../queries/queries';
+import { useMutation } from '@apollo/react-hooks';
 
-// const NewRecipe = () => {
-//   return (
-//     <div>
-//       <h1>New Recipe</h1>
-//       <form>
-//         <label for="name">Recipe Name</label>
-//         <input id="name" type="text" />
-//         <label for="link">Link</label>
-//         <input id="link" type="text" />
-//         <label for="ingredients">Ingredients</label>
-//         <input id="ingredients" type="text" />
-//         <label for="steps">Steps</label>
-//         <input id="steps" type="text" />
-//         <button>Save</button>
-//       </form>
-//     </div>
-//   );
-// }
+const NewRecipe = () => {
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
+  const [ingredients, setIngredients] = useState('');
+  const [steps, setSteps] = useState('');
+  const [submitForm, { loading, error }] = useMutation(addRecipeMutation);
 
-class NewRecipe extends React.Component {
-  state = {
-    name: "",
-    link: "",
-    ingredients: "",
-    steps: ""
-  };
-
-  onFormSubmit = (e) => {
-    e.preventDefault();
-    console.log(this.state);
-    this.props.addRecipeMutation({
-      variables: {
-        name: this.state.name,
-        link: this.state.link,
-        ingredients: this.state.ingredients,
-        steps: this.state.steps
-      }
-    })
-  }
-
-  render(){
-    return (
-      <div>
-        <h1>New Recipe</h1>
-        <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="name">Recipe Name</label>
-          <input id="name" type="text" value={this.state.name} onChange={(e)=>this.setState({name:e.target.value})} />
-          <label htmlFor="link">Link</label>
-          <input id="link" type="text" value={this.state.link} onChange={(e)=>this.setState({link:e.target.value})} />
-          <label htmlFor="ingredients">Ingredients</label>
-          <input id="ingredients" type="text" value={this.state.ingredients} onChange={(e)=>this.setState({ingredients:e.target.value})} />
-          <label htmlFor="steps">Steps</label>
-          <input id="steps" type="text" value={this.state.steps} onChange={(e)=>this.setState({steps:e.target.value})} />
-          <button>Save</button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <form onSubmit={e => {
+          e.preventDefault();
+          submitForm({ variables: { name: name, link: link, ingredients: ingredients, steps: steps }, refetchQueries: [{query:getRecipesQuery}] });
+          alert('Submitted!');
+        }}>
+      <label htmlFor="name">Recipe Name</label>
+      <input id="name" type="text" value={name} onChange={(e)=>setName(e.target.value)} />
+      <label htmlFor="link">Link</label>
+      <input id="link" type="text" value={link} onChange={(e)=>setLink(e.target.value)} />
+      <label htmlFor="ingredients">Ingredients</label>
+      <input id="ingredients" type="text" value={ingredients} onChange={(e)=>setIngredients(e.target.value)} />
+      <label htmlFor="steps">Steps</label>
+      <input id="steps" type="text" value={steps} onChange={(e)=>setSteps(e.target.value)} />
+      <button>Save</button>
+    </form>
+  )
 }
 
-export default graphql(addRecipeMutation, {name:'addRecipeMutation'})(NewRecipe);
+export default NewRecipe;
