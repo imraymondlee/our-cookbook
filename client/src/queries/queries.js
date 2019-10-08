@@ -21,7 +21,6 @@ const getRecipeQuery = gql`
   }
 `
 
-
 const addRecipeMutation = gql`
   mutation($name: String!, $link: String!, $ingredients: String!, $steps: String!) {
     addRecipe(name: $name, link: $link, ingredients: $ingredients, steps: $steps) {
@@ -31,4 +30,12 @@ const addRecipeMutation = gql`
   }
 `
 
-export {getRecipesQuery, getRecipeQuery, addRecipeMutation};
+const deleteRecipeMutation = gql`
+  mutation($id: ID) {
+    deleteRecipe(id: $id) {
+      name
+    }
+  }
+`
+
+export {getRecipesQuery, getRecipeQuery, addRecipeMutation, deleteRecipeMutation};

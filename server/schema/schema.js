@@ -59,7 +59,14 @@ const Mutation = new GraphQLObjectType({
         });
         return recipe.save();
       }
-    }
+    },
+    deleteRecipe: {
+      type: RecipeType,
+      args: { id: {type:GraphQLID} },
+      resolve(parent,args) {
+        return Recipe.findByIdAndRemove(args.id);
+      }
+    },
   }
 });
 

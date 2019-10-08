@@ -1,4 +1,5 @@
 import React from 'react';
+import DeleteButton from './DeleteButton';
 import {getRecipeQuery} from '../queries/queries';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -19,7 +20,7 @@ const Recipe = ({match}) => {
 
       <h2>Steps</h2>
       <p>{data.recipe.steps}</p>
-
+      <DeleteButton id={match.params.id}/>
     </div>
   );
 }
