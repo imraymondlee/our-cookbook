@@ -11,7 +11,7 @@ const App = () => {
       <Link to="/"><h1>Our Cookbook</h1></Link>
       <Route path="/" exact component={Home} />
       <Route path="/new-recipe" component={NewRecipe} />
-      <Route path="/recipe" component={Recipe} />
+      <Route path="/recipe/:id" component={Recipe} />
     </Router>
   );
 }

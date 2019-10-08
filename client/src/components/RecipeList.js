@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {getRecipesQuery} from '../queries/queries';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -13,7 +14,7 @@ const RecipeList = () => {
         {
           data.recipes.map(recipe => {
             return(
-              <li key={recipe.id}>{recipe.name}</li>
+              <li key={recipe.id}><Link to={`/recipe/${recipe.id}`}>{recipe.name}</Link></li>
             );
           })
         }  
