@@ -7,7 +7,7 @@ const NewRecipe = () => {
   const [link, setLink] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
-  const [submitForm, { loading, error }] = useMutation(addRecipeMutation);
+  const [submitForm] = useMutation(addRecipeMutation);
 
   return (
     <form onSubmit={e => {

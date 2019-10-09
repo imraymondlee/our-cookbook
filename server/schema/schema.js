@@ -64,9 +64,28 @@ const Mutation = new GraphQLObjectType({
       type: RecipeType,
       args: { id: {type:GraphQLID} },
       resolve(parent,args) {
-        return Recipe.findByIdAndRemove(args.id);
+        return Recipe.findOneAndDelete({'_id': args.id});
       }
     },
+    editRecipe: {
+      type: RecipeType,
+      args: {
+        id: { type:GraphQLID },
+        name: { type:GraphQLString },
+        link: { type:GraphQLString },
+        ingredients: { type:GraphQLString },
+        steps: { type:GraphQLString }
+      },
+      resolve(parent, args) {
+        const update = {
+          name: args.name,
+          link: args.link,
+          ingredients: args.ingredients,
+          steps: args.steps
+        }
+        return Recipe.findOneAndUpdate({'_id': args.id}, update);
+      }
+    }
   }
 });
 

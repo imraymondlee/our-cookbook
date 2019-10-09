@@ -9,7 +9,7 @@ const app = express();
 
 app.use(cors());
 
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 mongoose.connection.once('open', () => {
   console.log("Connected to database");
 });

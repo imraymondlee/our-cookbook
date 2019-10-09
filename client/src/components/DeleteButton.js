@@ -1,13 +1,18 @@
 import React from 'react';
 import {deleteRecipeMutation, getRecipesQuery} from '../queries/queries';
 import { useMutation } from '@apollo/react-hooks';
-import { Redirect } from "react-router-dom";
 
 const DeleteButton = (props) => {
-  const [deleteRecipe, { loading, error }] = useMutation(deleteRecipeMutation);
+  const [deleteRecipe] = useMutation(deleteRecipeMutation);
 
   const clickDelete = () => {
-    deleteRecipe({ variables: { id: props.id }, refetchQueries: [{query:getRecipesQuery}] });
+    let del = window.confirm('Are you sure you want to delete?');
+    if (del) {
+      deleteRecipe({ variables: { id: props.id }, refetchQueries: [{query:getRecipesQuery}] });
+      alert('Deleted');
+    } else {
+        // Do nothing!
+    }
   }
 
   return (

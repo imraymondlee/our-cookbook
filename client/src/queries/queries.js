@@ -38,4 +38,12 @@ const deleteRecipeMutation = gql`
   }
 `
 
-export {getRecipesQuery, getRecipeQuery, addRecipeMutation, deleteRecipeMutation};
+const editRecipeMutation = gql`
+  mutation($id: ID, $name: String!, $link: String!, $ingredients: String!, $steps: String!) {
+    editRecipe(id: $id, name: $name, link: $link, ingredients: $ingredients, steps: $steps) {
+      id
+      name
+    }
+  }
+`
+export {getRecipesQuery, getRecipeQuery, addRecipeMutation, deleteRecipeMutation, editRecipeMutation};
