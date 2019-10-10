@@ -1,0 +1,80 @@
+$primary: rgb(65,129,115);
+$background: rgb(243,247,253);
+$body: #434343;
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  color: $body;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  padding: 1.5rem;
+
+  &__logo {
+    color: $primary;
+    font-weight: 800;
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+
+  &__links {
+
+  }
+
+  &__item {
+    padding: 1rem;
+    color: $body;
+    font-weight: 800;
+    text-decoration: none;
+  }
+}
+
+main {
+  max-width: 1140px;
+  margin: auto;
+}
+
+.recipe-grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+  &__item {
+    box-sizing: border-box;
+    flex-basis: 100%;
+    position: relative;
+    padding: 0.5rem;
+  }
+}
+@media(min-width: 560px) {
+  .recipe-grid__item {
+    flex-basis: 50%;
+  }
+}
+
+@media(min-width: 960px) {
+  .recipe-grid__item {
+    flex-basis: 33.3%;
+  }
+}
+
+.recipe-card {
+  display: block;
+  box-shadow: 0 2px 9px 0 #bfcbdd;
+  border-radius: 5px;
+  border: none;
+  padding: 1rem;
+  text-decoration: none;
+
+  &__name {
+    font-weight: 800;
+    color: $body;
+  }
+}

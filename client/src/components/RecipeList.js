@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import RecipeCard from './RecipeCard';
 import {getRecipesQuery} from '../queries/queries';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -9,16 +9,16 @@ const RecipeList = () => {
   if (error) return <p>ERROR</p>;
 
   return (
-    <div>
-      <ul>
-        {
-          data.recipes.map(recipe => {
-            return(
-              <li key={recipe.id}><Link to={`/recipe/${recipe.id}`}>{recipe.name}</Link></li>
-            );
-          })
-        }  
-      </ul>
+    <div className="recipe-grid">
+      {
+        data.recipes.map(recipe => {
+          return(
+            <div className="recipe-grid__item">
+              <RecipeCard id={recipe.id} name={recipe.name} />
+            </div>
+          );
+        })
+      }  
     </div>
   );
 }
