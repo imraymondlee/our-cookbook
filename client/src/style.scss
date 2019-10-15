@@ -1,4 +1,4 @@
-$primary: rgb(65,129,115);
+$primary: rgb(42,131,113);
 $background: rgb(243,247,253);
 $body: #434343;
 
@@ -76,5 +76,53 @@ main {
   &__name {
     font-weight: 800;
     color: $body;
+  }
+}
+
+.form {
+  margin: 2rem 0;
+
+  &__field {
+    margin: 2rem 0;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid rgb(150,150,150);
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+  }
+}
+
+.button {
+  box-sizing: border-box;
+  vertical-align: middle;
+  display: inline-block;
+  height: 48px;
+  border-radius: 5px;
+  padding: 0.75rem 2.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+
+  &--primary {
+    border: 2px solid $primary;
+    background-color: $primary;
+    color: white;
+  }
+
+  &--secondary {
+    border: 2px solid $primary;
+    background-color: transparent;
+    color: $primary;
   }
 }

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import {getRecipeQuery, editRecipeMutation} from '../queries/queries';
 import {useQuery, useMutation} from '@apollo/react-hooks';
 
@@ -27,19 +28,27 @@ const EditRecipe = ({match}) => {
 
   return (
     <div>
-      <h1>Edit Recipe {match.params.id}</h1>
-      <form onSubmit={submit}>
-        <label htmlFor="name">Recipe Name</label>
-        <input id="name" type="text" value={name} onChange={(e)=>setName(e.target.value)} />
-        <label htmlFor="link">Link</label>
-        <input id="link" type="text" value={link} onChange={(e)=>setLink(e.target.value)} />
-        <label htmlFor="ingredients">Ingredients</label>
-        <input id="ingredients" type="text" value={ingredients} onChange={(e)=>setIngredients(e.target.value)} />
-        <label htmlFor="steps">Steps</label>
-        <input id="steps" type="text" value={steps} onChange={(e)=>setSteps(e.target.value)} />
-        <button>Save</button>
+      <h1>Edit Recipe - {name}</h1>
+      <form className="form" onSubmit={submit}>
+        <div className="form__field">
+          <label className="form__label" htmlFor="name">Recipe Name</label>
+          <input id="name" className="form__input" type="text" value={name} onChange={(e)=>setName(e.target.value)} />
+        </div>
+        <div className="form__field">
+          <label className="form__label" htmlFor="link">Link</label>
+          <input id="link" className="form__input" type="text" value={link} onChange={(e)=>setLink(e.target.value)} />
+        </div>
+        <div className="form__field">
+          <label className="form__label" htmlFor="ingredients">Ingredients</label>
+          <textarea id="ingredients" className="form__input" rows="10" value={ingredients} onChange={(e)=>setIngredients(e.target.value)} />
+        </div>
+        <div className="form__field">
+          <label className="form__label" htmlFor="steps">Steps</label>
+          <textarea id="steps" className="form__input" rows="10" value={steps} onChange={(e)=>setSteps(e.target.value)} />
+        </div>
+        <Link to="/" className="button button--secondary" style={{marginRight: '0.5rem'}}>Cancel</Link>
+        <button className="button button--primary">Update</button>
       </form>
-
     </div>
   );
 }
