@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 import {addRecipeMutation, getRecipesQuery} from '../queries/queries';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -9,22 +10,36 @@ const NewRecipe = () => {
   const [steps, setSteps] = useState('');
   const [submitForm] = useMutation(addRecipeMutation);
 
+  const submit = (e) => {
+    e.preventDefault();
+    submitForm({ variables: { name: name, link: link, ingredients: ingredients, steps: steps }, refetchQueries: [{query:getRecipesQuery}] });
+    alert('Submitted!');
+  }
+
   return (
-    <form onSubmit={e => {
-          e.preventDefault();
-          submitForm({ variables: { name: name, link: link, ingredients: ingredients, steps: steps }, refetchQueries: [{query:getRecipesQuery}] });
-          alert('Submitted!');
-        }}>
-      <label htmlFor="name">Recipe Name</label>
-      <input id="name" type="text" value={name} onChange={(e)=>setName(e.target.value)} />
-      <label htmlFor="link">Link</label>
-      <input id="link" type="text" value={link} onChange={(e)=>setLink(e.target.value)} />
-      <label htmlFor="ingredients">Ingredients</label>
-      <input id="ingredients" type="text" value={ingredients} onChange={(e)=>setIngredients(e.target.value)} />
-      <label htmlFor="steps">Steps</label>
-      <input id="steps" type="text" value={steps} onChange={(e)=>setSteps(e.target.value)} />
-      <button>Save</button>
-    </form>
+    <div>
+      <h1>New Recipe</h1>
+      <form className="form" onSubmit={submit}>
+        <div className="form__field">
+          <label className="form__label" htmlFor="name">Recipe Name</label>
+          <input id="name" className="form__input" type="text" value={name} onChange={(e)=>setName(e.target.value)} />
+        </div>
+        <div className="form__field">
+          <label className="form__label" htmlFor="link">Link</label>
+          <input id="link" className="form__input" type="text" value={link} onChange={(e)=>setLink(e.target.value)} />
+        </div>
+        <div className="form__field">
+          <label className="form__label" htmlFor="ingredients">Ingredients</label>
+          <textarea id="ingredients" className="form__input" rows="10" value={ingredients} onChange={(e)=>setIngredients(e.target.value)} />
+        </div>
+        <div className="form__field">
+          <label className="form__label" htmlFor="steps">Steps</label>
+          <textarea id="steps" className="form__input" rows="10" value={steps} onChange={(e)=>setSteps(e.target.value)} />
+        </div>
+        <Link to="/" className="button button--secondary" style={{marginRight: '0.5rem'}}>Cancel</Link>
+        <button className="button button--primary">Save</button>
+      </form>
+    </div>
   )
 }
 

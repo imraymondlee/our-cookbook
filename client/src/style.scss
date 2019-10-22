@@ -1,0 +1,171 @@
+$primary: rgb(42,131,113);
+$background: rgb(243,247,253);
+$body: #434343;
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  color: $body;
+}
+
+a {
+  color: $primary;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  padding: 1.5rem;
+
+  &__logo {
+    color: $primary;
+    font-weight: 800;
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+
+  &__links {
+
+  }
+
+  &__item {
+    padding: 1rem;
+    color: $body;
+    font-weight: 800;
+    text-decoration: none;
+  }
+}
+
+main {
+  max-width: 1140px;
+  margin: auto;
+}
+
+.recipe-grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+  &__item {
+    box-sizing: border-box;
+    flex-basis: 100%;
+    position: relative;
+    padding: 0.5rem;
+  }
+}
+@media(min-width: 560px) {
+  .recipe-grid__item {
+    flex-basis: 50%;
+  }
+}
+
+@media(min-width: 960px) {
+  .recipe-grid__item {
+    flex-basis: 33.3%;
+  }
+}
+
+.recipe-card {
+  display: block;
+  box-shadow: 0 2px 9px 0 #bfcbdd;
+  border-radius: 5px;
+  border: none;
+  padding: 1rem;
+  text-decoration: none;
+
+  &__name {
+    font-weight: 800;
+    color: $body;
+  }
+}
+
+.form {
+  margin: 2rem 0;
+
+  &__field {
+    margin: 2rem 0;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid rgb(150,150,150);
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+  }
+}
+
+.button {
+  box-sizing: border-box;
+  vertical-align: middle;
+  display: inline-block;
+  height: 48px;
+  border-radius: 5px;
+  padding: 0.75rem 2.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+
+  &--primary {
+    border: 2px solid $primary;
+    background-color: $primary;
+    color: white;
+  }
+
+  &--secondary {
+    border: 2px solid $primary;
+    background-color: transparent;
+    color: $primary;
+  }
+
+  &--caution {
+    border: 2px solid #DA392B;
+    background-color: #DA392B;
+    color: white;
+  }
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 3rem;
+}
+
+.single-recipe {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+
+  &__header {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+
+  &__options {
+    grid-column: 4;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  &__ingredients {
+    grid-column: 1 / 2;
+    grid-row: 2;
+  }
+
+  &__steps {
+    grid-column: 2 / 4;
+    grid-row: 2;
+  }
+}

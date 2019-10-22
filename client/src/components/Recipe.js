@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DeleteButton from './DeleteButton';
 import {getRecipeQuery} from '../queries/queries';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -10,19 +9,25 @@ const Recipe = ({match}) => {
   if (error) return <p>ERROR</p>;
 
   return (
-    <div>
-      <h1>Recipe - {data.recipe.name}</h1>
+    <div className="single-recipe">
+      <div className="single-recipe__header">
+        <h1 className="title">{data.recipe.name}</h1>
+        <div><a href={data.recipe.link}>{data.recipe.link}</a></div>
+      </div>
 
-      <h2>Link</h2>
-      <p><a href={data.recipe.link}>{data.recipe.link}</a></p>
+      <div className="single-recipe__ingredients">
+        <h2>Ingredients</h2>
+        <p>{data.recipe.ingredients}</p>
+      </div>
 
-      <h2>Ingredients</h2>
-      <p>{data.recipe.ingredients}</p>
+      <div className="single-recipe__steps">
+        <h2>Steps</h2>
+        <p>{data.recipe.steps}</p>
+      </div>
 
-      <h2>Steps</h2>
-      <p>{data.recipe.steps}</p>
-      <Link to={`/edit-recipe/${match.params.id}`}>Edit</Link>
-      <DeleteButton id={match.params.id}/>
+      <div className="single-recipe__options">
+        <Link to={`/edit-recipe/${match.params.id}`} className="button button--secondary">Edit</Link>
+      </div>
     </div>
   );
 }
