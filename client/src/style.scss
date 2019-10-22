@@ -8,6 +8,10 @@ body {
   color: $body;
 }
 
+a {
+  color: $primary;
+}
+
 .nav {
   display: flex;
   justify-content: space-between;
@@ -124,5 +128,44 @@ main {
     border: 2px solid $primary;
     background-color: transparent;
     color: $primary;
+  }
+
+  &--caution {
+    border: 2px solid #DA392B;
+    background-color: #DA392B;
+    color: white;
+  }
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 3rem;
+}
+
+.single-recipe {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+
+  &__header {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+
+  &__options {
+    grid-column: 4;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  &__ingredients {
+    grid-column: 1 / 2;
+    grid-row: 2;
+  }
+
+  &__steps {
+    grid-column: 2 / 4;
+    grid-row: 2;
   }
 }

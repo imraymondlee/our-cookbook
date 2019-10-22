@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {getRecipeQuery, editRecipeMutation} from '../queries/queries';
 import {useQuery, useMutation} from '@apollo/react-hooks';
+import DeleteButton from './DeleteButton';
 
 const EditRecipe = ({match}) => {
   const { data } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
@@ -48,6 +49,9 @@ const EditRecipe = ({match}) => {
         </div>
         <Link to="/" className="button button--secondary" style={{marginRight: '0.5rem'}}>Cancel</Link>
         <button className="button button--primary">Update</button>
+        <div style={{float: 'right'}}>
+          <DeleteButton id={match.params.id} />
+        </div>
       </form>
     </div>
   );

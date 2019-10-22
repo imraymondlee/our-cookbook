@@ -16,7 +16,7 @@ const DeleteButton = (props) => {
   }
 
   return (
-    <button onClick={clickDelete}>Delete {props.id}</button>
+    <button onClick={clickDelete} className="button button--caution">Delete</button>
   );
 }
 
