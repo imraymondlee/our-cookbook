@@ -7,14 +7,15 @@ const {
   GraphQLString, 
   GraphQLSchema,
   GraphQLID,
-  GraphQLList } = graphql;
+  GraphQLList,
+  GraphQLEnumType } = graphql;
 
 const RecipeType = new GraphQLObjectType({
   name: 'Recipe',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    ingredients: { type: GraphQLString },
+    ingredients: { type: new GraphQLList(GraphQLString) },
     steps: { type: GraphQLString },
     link: { type: GraphQLString }
   })
@@ -46,7 +47,7 @@ const Mutation = new GraphQLObjectType({
       type: RecipeType,
       args: {
         name: { type: GraphQLString },
-        ingredients: { type: GraphQLString },
+        ingredients: { type: new GraphQLList(GraphQLString) },
         steps: { type: GraphQLString },
         link: { type: GraphQLString }
       },
@@ -80,7 +81,7 @@ const Mutation = new GraphQLObjectType({
         const update = {
           name: args.name,
           link: args.link,
-          ingredients: args.ingredients,
+          ingredients: { type: new GraphQLList(GraphQLString) },
           steps: args.steps
         }
         return Recipe.findOneAndUpdate({'_id': args.id}, update);

@@ -8,6 +8,12 @@ const Recipe = ({match}) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>ERROR</p>;
 
+  const ingredientsList = data.recipe.ingredients.map(ingredient => {
+    return (
+      <li>{ingredient}</li>
+    );
+  });
+
   return (
     <div className="single-recipe">
       <div className="single-recipe__header">
@@ -17,7 +23,9 @@ const Recipe = ({match}) => {
 
       <div className="single-recipe__ingredients">
         <h2>Ingredients</h2>
-        <p>{data.recipe.ingredients}</p>
+        <ul>
+          {ingredientsList}
+        </ul>
       </div>
 
       <div className="single-recipe__steps">

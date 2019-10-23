@@ -22,7 +22,7 @@ const getRecipeQuery = gql`
 `
 
 const addRecipeMutation = gql`
-  mutation($name: String!, $link: String!, $ingredients: String!, $steps: String!) {
+  mutation($name: String!, $link: String!, $ingredients: [String]!, $steps: String!) {
     addRecipe(name: $name, link: $link, ingredients: $ingredients, steps: $steps) {
       id
       name
@@ -39,7 +39,7 @@ const deleteRecipeMutation = gql`
 `
 
 const editRecipeMutation = gql`
-  mutation($id: ID, $name: String!, $link: String!, $ingredients: String!, $steps: String!) {
+  mutation($id: ID, $name: String!, $link: String!, $ingredients: [String]!, $steps: String!) {
     editRecipe(id: $id, name: $name, link: $link, ingredients: $ingredients, steps: $steps) {
       id
       name

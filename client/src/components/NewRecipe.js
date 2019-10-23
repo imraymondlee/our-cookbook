@@ -12,7 +12,8 @@ const NewRecipe = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    submitForm({ variables: { name: name, link: link, ingredients: ingredients, steps: steps }, refetchQueries: [{query:getRecipesQuery}] });
+    let ingredientsArray = ingredients.split("*");
+    submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: steps }, refetchQueries: [{query:getRecipesQuery}] });
     alert('Submitted!');
   }
 
