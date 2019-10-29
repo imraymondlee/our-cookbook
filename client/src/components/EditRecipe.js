@@ -16,14 +16,18 @@ const EditRecipe = ({match}) => {
     if(data && data.recipe) {
       setName(data.recipe.name);
       setLink(data.recipe.link);
-      setIngredients(data.recipe.ingredients);
+      let formattedIngredients = data.recipe.ingredients.toString().replace(/,/g, "\n*");
+      setIngredients("*"+formattedIngredients);
       setSteps(data.recipe.steps);
     }
   },[data]);
 
   const submit = (e) => {
     e.preventDefault();
-    submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredients, steps: steps }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
+    let cleanIngredients = ingredients.replace(/\n/g, "");
+    let ingredientsArray = cleanIngredients.split("*");
+    ingredientsArray = ingredientsArray.slice(1,ingredientsArray.length);
+    submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredientsArray, steps: steps }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
     alert('Updated!');
   }
 

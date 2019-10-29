@@ -74,14 +74,14 @@ const Mutation = new GraphQLObjectType({
         id: { type:GraphQLID },
         name: { type:GraphQLString },
         link: { type:GraphQLString },
-        ingredients: { type:GraphQLString },
+        ingredients: { type: new GraphQLList(GraphQLString) },
         steps: { type:GraphQLString }
       },
       resolve(parent, args) {
         const update = {
           name: args.name,
           link: args.link,
-          ingredients: { type: new GraphQLList(GraphQLString) },
+          ingredients: args.ingredients,
           steps: args.steps
         }
         return Recipe.findOneAndUpdate({'_id': args.id}, update);

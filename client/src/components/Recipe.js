@@ -10,7 +10,7 @@ const Recipe = ({match}) => {
 
   const ingredientsList = data.recipe.ingredients.map(ingredient => {
     return (
-      <li>{ingredient}</li>
+      <li key={ingredient}>{ingredient}</li>
     );
   });
 
