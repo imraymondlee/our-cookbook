@@ -15,7 +15,12 @@ const NewRecipe = () => {
     let cleanIngredients = ingredients.replace(/\n/g, "");
     let ingredientsArray = cleanIngredients.split("*");
     ingredientsArray = ingredientsArray.slice(1,ingredientsArray.length);
-    submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: steps }, refetchQueries: [{query:getRecipesQuery}] });
+
+    let cleanSteps = steps.replace(/\n/g, "");
+    let stepsArray = cleanSteps.split("*");
+    stepsArray = stepsArray.slice(1,stepsArray.length);
+
+    submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: stepsArray }, refetchQueries: [{query:getRecipesQuery}] });
     alert('Submitted!');
   }
 

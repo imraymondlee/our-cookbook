@@ -21,7 +21,12 @@ const EditRecipe = ({match}) => {
         formattedIngredients += "*"+ingredient+"\n";
       });
       setIngredients(formattedIngredients);
-      setSteps(data.recipe.steps);
+
+      let formattedSteps = '';
+      data.recipe.steps.forEach((step)=> {
+        formattedSteps += "*"+step+"\n";
+      });
+      setSteps(formattedSteps);
     }
   },[data]);
 
@@ -30,7 +35,11 @@ const EditRecipe = ({match}) => {
     let cleanIngredients = ingredients.replace(/\n/g, "");
     let ingredientsArray = cleanIngredients.split("*");
     ingredientsArray = ingredientsArray.slice(1,ingredientsArray.length);
-    submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredientsArray, steps: steps }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
+    
+    let cleanSteps = steps.replace(/\n/g, "");
+    let stepsArray = cleanSteps.split("*");
+    stepsArray = stepsArray.slice(1,stepsArray.length);
+    submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredientsArray, steps: stepsArray }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
     alert('Updated!');
   }
 

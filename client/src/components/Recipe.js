@@ -14,6 +14,12 @@ const Recipe = ({match}) => {
     );
   });
 
+  const stepsList = data.recipe.steps.map(step => {
+    return (
+      <li key={step}>{step}</li>
+    );
+  });
+
   return (
     <div className="single-recipe">
       <div className="single-recipe__header">
@@ -30,7 +36,9 @@ const Recipe = ({match}) => {
 
       <div className="single-recipe__steps">
         <h2>Steps</h2>
-        <p>{data.recipe.steps}</p>
+        <ol>
+          {stepsList}
+        </ol>
       </div>
 
       <div className="single-recipe__options">
