@@ -16,8 +16,11 @@ const EditRecipe = ({match}) => {
     if(data && data.recipe) {
       setName(data.recipe.name);
       setLink(data.recipe.link);
-      let formattedIngredients = data.recipe.ingredients.toString().replace(/,/g, "\n*");
-      setIngredients("*"+formattedIngredients);
+      let formattedIngredients = '';
+      data.recipe.ingredients.forEach((ingredient)=> {
+        formattedIngredients += "*"+ingredient+"\n";
+      });
+      setIngredients(formattedIngredients);
       setSteps(data.recipe.steps);
     }
   },[data]);
