@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {addRecipeMutation, getRecipesQuery} from '../queries/queries';
 import { useMutation } from '@apollo/react-hooks';
@@ -10,8 +11,22 @@ const NewRecipe = () => {
   const [steps, setSteps] = useState('');
   const [submitForm] = useMutation(addRecipeMutation);
 
+  let fileInput = React.createRef();
+
   const submit = (e) => {
     e.preventDefault();
+
+    const data = new FormData();
+    data.append('image', fileInput.current.files[0])
+    axios.post('/upload', data, {
+          'Content-Type': 'multipart/form-data'
+      }).then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);
+      });
+
+
     let cleanIngredients = ingredients.replace(/\n/g, "");
     let ingredientsArray = cleanIngredients.split("*");
     ingredientsArray = ingredientsArray.slice(1,ingredientsArray.length);
@@ -35,6 +50,10 @@ const NewRecipe = () => {
         <div className="form__field">
           <label className="form__label" htmlFor="link">Link</label>
           <input id="link" className="form__input" type="text" value={link} onChange={(e)=>setLink(e.target.value)} />
+        </div>
+        <div className="form__field">
+          <label className="form__label" htmlFor="image">Image</label>
+          <input id="image" className="form__input" type="file" ref={fileInput} />
         </div>
         <div className="form__field">
           <label className="form__label" htmlFor="ingredients">Ingredients</label>
