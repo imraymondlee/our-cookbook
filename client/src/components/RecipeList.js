@@ -14,7 +14,7 @@ const RecipeList = () => {
         data.recipes.map(recipe => {
           return(
             <div key={recipe.id} className="recipe-grid__item">
-              <RecipeCard id={recipe.id} name={recipe.name} />
+              <RecipeCard id={recipe.id} name={recipe.name} image={recipe.image} />
             </div>
           );
         })

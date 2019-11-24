@@ -78,8 +78,14 @@ main {
   text-decoration: none;
 
   &__name {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     font-weight: 800;
     color: $body;
+  }
+
+  &__image {
+    width: 100%;
   }
 }
 

@@ -5,6 +5,7 @@ const getRecipesQuery = gql`
     recipes {
       id
       name
+      image
     }
   }
 `
@@ -17,6 +18,7 @@ const getRecipeQuery = gql`
       link
       ingredients
       steps
+      image
     }
   }
 `

@@ -35,7 +35,8 @@ const NewRecipe = () => {
           'Content-Type': 'multipart/form-data'
       }).then((res) => {
         // Returned image file name
-        fileName = res.data.filename;
+        console.log(res);
+        fileName = res.data;
       }).then(() => {
         // GraphQL Mutation for the post
         submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName}, refetchQueries: [{query:getRecipesQuery}] });
