@@ -15,28 +15,34 @@ const NewRecipe = () => {
 
   const submit = (e) => {
     e.preventDefault();
-
-    const data = new FormData();
-    data.append('image', fileInput.current.files[0])
-    axios.post('/upload', data, {
-          'Content-Type': 'multipart/form-data'
-      }).then((res) => {
-        console.log(res);
-      }).catch((err) => {
-        console.log(err);
-      });
-
-
+    // Ingredients
     let cleanIngredients = ingredients.replace(/\n/g, "");
     let ingredientsArray = cleanIngredients.split("*");
     ingredientsArray = ingredientsArray.slice(1,ingredientsArray.length);
 
+    // Steps
     let cleanSteps = steps.replace(/\n/g, "");
     let stepsArray = cleanSteps.split("*");
     stepsArray = stepsArray.slice(1,stepsArray.length);
 
-    submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: stepsArray }, refetchQueries: [{query:getRecipesQuery}] });
-    alert('Submitted!');
+    // Image
+    let fileName = null;
+    const data = new FormData();
+    data.append('image', fileInput.current.files[0])
+
+    // Upload image
+    axios.post('/upload', data, {
+          'Content-Type': 'multipart/form-data'
+      }).then((res) => {
+        // Returned image file name
+        fileName = res.data.filename;
+      }).then(() => {
+        // GraphQL Mutation for the post
+        submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName}, refetchQueries: [{query:getRecipesQuery}] });
+        alert('Submitted!');
+      }).catch((err) => {
+        console.log(err);
+      });
   }
 
   return (

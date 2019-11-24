@@ -17,7 +17,8 @@ const RecipeType = new GraphQLObjectType({
     name: { type: GraphQLString },
     ingredients: { type: new GraphQLList(GraphQLString) },
     steps: { type: new GraphQLList(GraphQLString) },
-    link: { type: GraphQLString }
+    link: { type: GraphQLString },
+    image: { type: GraphQLString }
   })
 });
 
@@ -49,7 +50,8 @@ const Mutation = new GraphQLObjectType({
         name: { type: GraphQLString },
         ingredients: { type: new GraphQLList(GraphQLString) },
         steps: { type: new GraphQLList(GraphQLString) },
-        link: { type: GraphQLString }
+        link: { type: GraphQLString },
+        image: { type: GraphQLString }
       },
       resolve(parent, args) {
         let recipe = new Recipe({
@@ -57,6 +59,7 @@ const Mutation = new GraphQLObjectType({
           ingredients: args.ingredients,
           steps: args.steps,
           link: args.link,
+          image: args.image
         });
         return recipe.save();
       }
@@ -75,14 +78,16 @@ const Mutation = new GraphQLObjectType({
         name: { type:GraphQLString },
         link: { type:GraphQLString },
         ingredients: { type: new GraphQLList(GraphQLString) },
-        steps: { type: new GraphQLList(GraphQLString) }
+        steps: { type: new GraphQLList(GraphQLString) },
+        image: { type: GraphQLString }
       },
       resolve(parent, args) {
         const update = {
           name: args.name,
           link: args.link,
           ingredients: args.ingredients,
-          steps: args.steps
+          steps: args.steps,
+          image: args.image
         }
         return Recipe.findOneAndUpdate({'_id': args.id}, update);
       }
