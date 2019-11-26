@@ -28,7 +28,7 @@ const NewRecipe = () => {
     // Image
     let fileName = null;
     const data = new FormData();
-    data.append('image', fileInput.current.files[0])
+    data.append('image', fileInput.current.files[0]);
 
     // Upload image
     axios.post('/upload', data, {

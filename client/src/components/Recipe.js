@@ -27,7 +27,7 @@ const Recipe = ({match}) => {
         <div><a href={data.recipe.link}>{data.recipe.link}</a></div>
       </div>
 
-      <img src={data.recipe.image} className="single-recipe__image" />
+      <img src={data.recipe.image} className="single-recipe__image" alt="" />
 
       <div className="single-recipe__ingredients">
         <h2>Ingredients</h2>

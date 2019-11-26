@@ -52,7 +52,7 @@ app.post('/upload', upload.single('image'), (req, res, next) => {
     return next(error);
   }
 
-  cloudinary.uploader.upload('uploads/' + fileName, { folder: 'our-cookbook' }, function(error, result) { 
+  cloudinary.uploader.upload('uploads/' + fileName, { folder: 'our-cookbook', width: 800, height: 600, crop: 'lfill', quality: 70 }, function(error, result) { 
     if (error) return res.send(error);
 
     // Remove image stored on server
