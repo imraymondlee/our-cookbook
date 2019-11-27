@@ -10,6 +10,11 @@ body {
 
 a {
   color: $primary;
+
+  &:hover {
+    text-decoration: none;
+    color: lighten($primary, 10%);
+  }
 }
 
 .nav {
@@ -26,6 +31,8 @@ a {
     font-weight: 800;
     font-size: 1.25rem;
     text-decoration: none;
+
+    &:hover { color: lighten($primary, 10%); }
   }
 
   &__links {
@@ -37,12 +44,18 @@ a {
     color: $body;
     font-weight: 800;
     text-decoration: none;
+
+    &:hover { 
+      text-decoration: underline;
+      color: lighten($body, 10%);
+    }
   }
 }
 
 main {
   max-width: 1140px;
   margin: auto;
+  padding: 1rem;
 }
 
 .recipe-grid {
@@ -76,6 +89,7 @@ main {
   border: none;
   padding: 1rem;
   text-decoration: none;
+  transition: box-shadow 0.25s;
 
   &__name {
     margin-top: 1rem;
@@ -86,6 +100,10 @@ main {
 
   &__image {
     width: 100%;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 9px 0 #535c6b;
   }
 }
 
@@ -123,23 +141,49 @@ main {
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  transition: all 0.1s;
 
   &--primary {
     border: 2px solid $primary;
     background-color: $primary;
     color: white;
+
+
+    &:hover,
+    &:focus,
+    &:active {
+      border: 2px solid lighten($primary, 5%);
+      background-color: transparent;
+      color: lighten($primary, 5%);
+    }
   }
 
   &--secondary {
     border: 2px solid $primary;
     background-color: transparent;
     color: $primary;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border: 2px solid lighten($primary, 5%);
+      background-color: lighten($primary, 5%);
+      color: white;
+    }
   }
 
   &--caution {
     border: 2px solid #DA392B;
     background-color: #DA392B;
     color: white;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border: 2px solid darken(#DA392B, 10%);
+      background-color: transparent;
+      color: darken(#DA392B, 10%);
+    }
   }
 }
 

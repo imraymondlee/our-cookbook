@@ -86,7 +86,7 @@ const EditRecipe = ({match}) => {
         </div>
         <div className="form__field">
           <label className="form__label" htmlFor="image">Image</label>
-          {data && data.recipe ? <a href={data.recipe.image} target='_blank'>View Current Image</a> : ''}
+          {data && data.recipe ? <a href={data.recipe.image} target='_blank' rel='noopener noreferrer'>View Current Image</a> : ''}
           <input id="image" className="form__input" type="file" ref={fileInput} />
         </div>
         <div className="form__field">
