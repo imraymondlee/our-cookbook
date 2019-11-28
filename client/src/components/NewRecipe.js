@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {addRecipeMutation, getRecipesQuery} from '../queries/queries';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -10,6 +10,7 @@ const NewRecipe = () => {
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
   const [submitForm] = useMutation(addRecipeMutation);
+  const [toHome, setToHome] = useState(false);
 
   let fileInput = React.createRef();
 
@@ -31,7 +32,7 @@ const NewRecipe = () => {
     data.append('image', fileInput.current.files[0]);
 
     // Upload image
-    axios.post('http://ec2-3-83-106-94.compute-1.amazonaws.com:4000/upload', data, {
+    axios.post(process.env.REACT_APP_API_ENDPOINT+'/upload', data, {
           'Content-Type': 'multipart/form-data'
       }).then((res) => {
         // Returned image file name
@@ -41,6 +42,7 @@ const NewRecipe = () => {
         // GraphQL Mutation for the post
         submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName}, refetchQueries: [{query:getRecipesQuery}] });
         alert('Submitted!');
+        setToHome(true);
       }).catch((err) => {
         console.log(err.response);
       });
@@ -48,6 +50,7 @@ const NewRecipe = () => {
 
   return (
     <div>
+      {toHome ? <Redirect to="/" /> : null }
       <h1>New Recipe</h1>
       <form className="form" onSubmit={submit}>
         <div className="form__field">
