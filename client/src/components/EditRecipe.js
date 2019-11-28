@@ -4,6 +4,9 @@ import { Link, Redirect } from 'react-router-dom';
 import {getRecipeQuery, editRecipeMutation} from '../queries/queries';
 import {useQuery, useMutation} from '@apollo/react-hooks';
 import DeleteButton from './DeleteButton';
+import Modal from 'react-modal';
+
+Modal.setAppElement(document.getElementById('root'));
 
 const EditRecipe = ({match}) => {
   const { data } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
@@ -13,6 +16,7 @@ const EditRecipe = ({match}) => {
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
   const [toHome, setToHome] = useState(false);
+  const [modalIsOpen,setIsOpen] = React.useState(false);
 
   let fileInput = React.createRef();
 
@@ -61,8 +65,7 @@ const EditRecipe = ({match}) => {
         }).then(() => {
           // GraphQL Mutation for the post
           submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
-          alert('Updated!');
-          setToHome(true);
+          openModal();
 
         }).catch((err) => {
           console.log(err.response);
@@ -71,14 +74,34 @@ const EditRecipe = ({match}) => {
       fileName = data.recipe.image;
       // GraphQL Mutation for the post
       submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
-      alert('Updated!');
-      setToHome(true);
+      openModal();
     }
+  }
+
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setToHome(true);
   }
 
   return (
     <div>
       {toHome ? <Redirect to="/" /> : null }
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className="react-modal-component__modal"
+        overlayClassName="react-modal-component"
+        contentLabel="Recipe Updated Modal"
+      >
+        <h1>Recipe Updated</h1>
+        <button onClick={closeModal} className="button button--primary">Return Home</button>
+      </Modal>
+
       <h1>Edit Recipe - {name}</h1>
       <form className="form" onSubmit={submit}>
         <div className="form__field">
