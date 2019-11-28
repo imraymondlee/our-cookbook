@@ -6,6 +6,7 @@ import Home from './Home';
 import NewRecipe from './NewRecipe';
 import Recipe from './Recipe';
 import EditRecipe from './EditRecipe';
+import RandomRecipe from './RandomRecipe';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/new-recipe" component={NewRecipe} />
         <Route path="/recipe/:id" component={Recipe} />
         <Route path="/edit-recipe/:id" component={EditRecipe} />
+        <Route path="/random-recipe" component={RandomRecipe} />
       </main>
     </Router>
   );

@@ -8,6 +8,7 @@ const Nav = () => {
       <div className="nav__links">
         <Link to="/" className="nav__item">All Recipes</Link>
         <Link to="/new-recipe/" className="nav__item">New Recipe</Link>
+        <Link to="/random-recipe/" className="nav__item">Random Recipe</Link>
       </div>
     </div>
   );

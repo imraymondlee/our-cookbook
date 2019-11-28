@@ -4,7 +4,7 @@ import RecipeList from './RecipeList';
 const Home = () => {
   return (
     <div>
-      <h1>Recipes</h1>
+      <h1>All Recipes</h1>
       <RecipeList />
     </div>
   );
