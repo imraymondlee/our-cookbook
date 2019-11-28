@@ -31,7 +31,7 @@ const NewRecipe = () => {
     data.append('image', fileInput.current.files[0]);
 
     // Upload image
-    axios.post('/upload', data, {
+    axios.post('http://ec2-3-83-106-94.compute-1.amazonaws.com:4000/upload', data, {
           'Content-Type': 'multipart/form-data'
       }).then((res) => {
         // Returned image file name
@@ -42,7 +42,7 @@ const NewRecipe = () => {
         submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName}, refetchQueries: [{query:getRecipesQuery}] });
         alert('Submitted!');
       }).catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   }
 
