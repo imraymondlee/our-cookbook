@@ -3,19 +3,30 @@ import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import {addRecipeMutation, getRecipesQuery} from '../queries/queries';
 import { useMutation } from '@apollo/react-hooks';
+import Modal from 'react-modal';
+
+Modal.setAppElement(document.getElementById('root'));
 
 const NewRecipe = () => {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
-  const [submitForm] = useMutation(addRecipeMutation);
+  const [submitForm] = useMutation(addRecipeMutation, {
+    onCompleted: () => {
+      setIsSubmitting(false);
+    }
+  });
   const [toHome, setToHome] = useState(false);
+  const [modalIsOpen,setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   let fileInput = React.createRef();
 
   const submit = (e) => {
     e.preventDefault();
+    openModal();
+
     // Ingredients
     let cleanIngredients = ingredients.replace(/\n/g, "");
     let ingredientsArray = cleanIngredients.split("*");
@@ -41,16 +52,46 @@ const NewRecipe = () => {
       }).then(() => {
         // GraphQL Mutation for the post
         submitForm({ variables: { name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName}, refetchQueries: [{query:getRecipesQuery}] });
-        alert('Submitted!');
-        setToHome(true);
       }).catch((err) => {
         console.log(err.response);
       });
   }
 
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const afterOpenModal = () => {
+    setIsSubmitting(true); 
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setToHome(true);
+  }
+
   return (
     <div>
       {toHome ? <Redirect to="/" /> : null }
+
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        className="react-modal-component__modal"
+        overlayClassName="react-modal-component"
+        contentLabel="Recipe Updated Modal"
+      >
+        {isSubmitting ? (
+          <h1>Saving...</h1>
+        ) : (
+          <React.Fragment>
+            <h1>Recipe Saved</h1>
+            <button onClick={closeModal} className="button button--primary">Return Home</button>
+          </React.Fragment>
+        )}
+      </Modal>
+
       <h1>New Recipe</h1>
       <form className="form" onSubmit={submit}>
         <div className="form__field">

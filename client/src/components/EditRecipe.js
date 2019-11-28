@@ -10,13 +10,18 @@ Modal.setAppElement(document.getElementById('root'));
 
 const EditRecipe = ({match}) => {
   const { data } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
-  const [submitForm] = useMutation(editRecipeMutation);
+  const [submitForm] = useMutation(editRecipeMutation, { 
+    onCompleted: () => {
+      setIsSubmitting(false);
+    }
+  });
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
   const [toHome, setToHome] = useState(false);
-  const [modalIsOpen,setIsOpen] = React.useState(false);
+  const [modalIsOpen,setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   let fileInput = React.createRef();
 
@@ -40,6 +45,8 @@ const EditRecipe = ({match}) => {
 
   const submit = (e) => {
     e.preventDefault();
+    openModal();
+
     // Ingredients
     let cleanIngredients = ingredients.replace(/\n/g, "");
     let ingredientsArray = cleanIngredients.split("*");
@@ -65,8 +72,6 @@ const EditRecipe = ({match}) => {
         }).then(() => {
           // GraphQL Mutation for the post
           submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
-          openModal();
-
         }).catch((err) => {
           console.log(err.response);
         });
@@ -74,12 +79,17 @@ const EditRecipe = ({match}) => {
       fileName = data.recipe.image;
       // GraphQL Mutation for the post
       submitForm({ variables: {id: match.params.id, name: name, link: link, ingredients: ingredientsArray, steps: stepsArray, image: fileName }, refetchQueries: [{query:getRecipeQuery, variables:{id:match.params.id}}] });
-      openModal();
     }
   }
 
   const openModal = () => {
     setIsOpen(true);
+    console.log('edit recipe modal: openModal');
+  }
+
+  const afterOpenModal = () => {
+    setIsSubmitting(true); 
+    console.log('edit recipe modal: afterOpenModal');
   }
 
   const closeModal = () => {
@@ -88,18 +98,26 @@ const EditRecipe = ({match}) => {
   }
 
   return (
+
     <div>
       {toHome ? <Redirect to="/" /> : null }
 
       <Modal
         isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         className="react-modal-component__modal"
         overlayClassName="react-modal-component"
         contentLabel="Recipe Updated Modal"
       >
-        <h1>Recipe Updated</h1>
-        <button onClick={closeModal} className="button button--primary">Return Home</button>
+        {isSubmitting ? (
+          <h1>Updating...</h1>
+        ) : (
+          <React.Fragment>
+            <h1>Recipe Updated</h1>
+            <button onClick={closeModal} className="button button--primary">Return Home</button>
+          </React.Fragment>
+        )}
       </Modal>
 
       <h1>Edit Recipe - {name}</h1>
