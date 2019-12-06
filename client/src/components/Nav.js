@@ -40,6 +40,7 @@ const Nav = () => {
             />
         ) : (
           <React.Fragment>
+            <Link to="/my-recipes/" className="nav__item">My Recipes</Link>
             <Link to="/new-recipe/" className="nav__item">New Recipe</Link>
             <GoogleLogout
                   clientId={process.env.REACT_APP_GOOGLE_CLIENTID}

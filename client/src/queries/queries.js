@@ -5,6 +5,7 @@ const getRecipesQuery = gql`
     recipes {
       id
       name
+      userId
       image
     }
   }
