@@ -1,17 +1,29 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
-
-const responseGoogle = (response) => {
-  console.log(response);
-  console.log("GoogleId:", response.googleId);
-}
-
-const logout = () => {
-  console.log('Logging Out');
-}
+import { useStateValue } from '../state';
 
 const Nav = () => {
+  const [{ accountId }, dispatch] = useStateValue();
+
+  const responseGoogle = (response) => {
+    console.log(response);
+    console.log("GoogleId:", response.googleId);
+
+    dispatch({
+      type: 'login',
+      accountId: response.googleId
+    });
+  }
+
+  const logout = () => {
+    console.log('Logging Out');
+    dispatch({
+      type: 'login',
+      accountId: ''
+    });
+  }
+
   return (
     <div className="nav">
       <Link to="/" className="nav__logo"><span role="img" aria-hidden="true">👨‍🍳</span> Our Cookbook</Link>
@@ -32,6 +44,9 @@ const Nav = () => {
               onLogoutSuccess={logout}
             >
         </GoogleLogout>
+
+        <p>Google ID: {accountId}</p>
+
       </div>
     </div>
   );
