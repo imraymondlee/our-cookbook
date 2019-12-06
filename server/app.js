@@ -62,7 +62,8 @@ app.post('/upload', upload.single('image'), (req, res, next) => {
   });
 });
 
+let port = process.env.PORT || 4000;
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log('Now listening on port 4000');
 });
