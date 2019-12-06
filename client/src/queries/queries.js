@@ -15,6 +15,7 @@ const getRecipeQuery = gql`
     recipe(id: $id) {
       id
       name
+      userId
       link
       ingredients
       steps
@@ -24,8 +25,8 @@ const getRecipeQuery = gql`
 `
 
 const addRecipeMutation = gql`
-  mutation($name: String!, $link: String!, $ingredients: [String]!, $steps: [String]!, $image: String) {
-    addRecipe(name: $name, link: $link, ingredients: $ingredients, steps: $steps, image: $image) {
+  mutation($name: String!, $userId: String!, $link: String!, $ingredients: [String]!, $steps: [String]!, $image: String) {
+    addRecipe(name: $name, userId: $userId, link: $link, ingredients: $ingredients, steps: $steps, image: $image) {
       id
       name
     }

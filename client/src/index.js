@@ -8,14 +8,14 @@ import { ApolloProvider } from 'react-apollo';
 
 // Global State
 const initialState = {
-  accountId: ''
+  userId: ''
 };
 const reducer = (state, action) => {
   switch (action.type) {
     case 'login':
       return {
         ...state,
-        accountId: action.accountId
+        userId: action.userId
       };
     default:
       return state;

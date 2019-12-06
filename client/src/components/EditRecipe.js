@@ -5,10 +5,12 @@ import {getRecipeQuery, editRecipeMutation} from '../queries/queries';
 import {useQuery, useMutation} from '@apollo/react-hooks';
 import DeleteButton from './DeleteButton';
 import Modal from 'react-modal';
+import { useStateValue } from '../state';
 
 Modal.setAppElement(document.getElementById('root'));
 
 const EditRecipe = ({match}) => {
+  const [{ userId }, dispatch] = useStateValue();
   const { data } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
   const [submitForm] = useMutation(editRecipeMutation, { 
     onCompleted: () => {
@@ -27,6 +29,9 @@ const EditRecipe = ({match}) => {
 
   useEffect(() => {
     if(data && data.recipe) {
+      if(userId !== data.recipe.userId) {
+        setToHome(true);
+      }
       setName(data.recipe.name);
       setLink(data.recipe.link);
       let formattedIngredients = '';

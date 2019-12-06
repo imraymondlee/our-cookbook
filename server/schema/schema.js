@@ -15,6 +15,7 @@ const RecipeType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
+    userId: { type: GraphQLString },
     ingredients: { type: new GraphQLList(GraphQLString) },
     steps: { type: new GraphQLList(GraphQLString) },
     link: { type: GraphQLString },
@@ -48,6 +49,7 @@ const Mutation = new GraphQLObjectType({
       type: RecipeType,
       args: {
         name: { type: GraphQLString },
+        userId: { type: GraphQLString },
         ingredients: { type: new GraphQLList(GraphQLString) },
         steps: { type: new GraphQLList(GraphQLString) },
         link: { type: GraphQLString },
@@ -56,6 +58,7 @@ const Mutation = new GraphQLObjectType({
       resolve(parent, args) {
         let recipe = new Recipe({
           name: args.name,
+          userId: args.userId,
           ingredients: args.ingredients,
           steps: args.steps,
           link: args.link,

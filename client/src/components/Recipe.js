@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {getRecipeQuery} from '../queries/queries';
 import { useQuery } from '@apollo/react-hooks';
+import { useStateValue } from '../state';
 
 const Recipe = ({match}) => {
+  const [{ userId }, dispatch] = useStateValue();
   const { data, loading, error } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
   if (loading) return <p>Loading...</p>;
   if (error) return <p>ERROR</p>;
@@ -43,9 +45,12 @@ const Recipe = ({match}) => {
         </ol>
       </div>
 
-      <div className="single-recipe__options">
-        <Link to={`/edit-recipe/${match.params.id}`} className="button button--secondary">Edit</Link>
-      </div>
+      {  userId === data.recipe.userId && 
+          <div className="single-recipe__options">
+            <Link to={`/edit-recipe/${match.params.id}`} className="button button--secondary">Edit</Link>
+          </div>
+      }
+
     </div>
   );
 }

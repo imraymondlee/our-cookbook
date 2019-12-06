@@ -4,7 +4,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { useStateValue } from '../state';
 
 const Nav = () => {
-  const [{ accountId }, dispatch] = useStateValue();
+  const [{ userId }, dispatch] = useStateValue();
 
   const responseGoogle = (response) => {
     console.log(response);
@@ -12,7 +12,7 @@ const Nav = () => {
 
     dispatch({
       type: 'login',
-      accountId: response.googleId
+      userId: response.googleId
     });
   }
 
@@ -20,7 +20,7 @@ const Nav = () => {
     console.log('Logging Out');
     dispatch({
       type: 'login',
-      accountId: ''
+      userId: ''
     });
   }
 
@@ -29,24 +29,26 @@ const Nav = () => {
       <Link to="/" className="nav__logo"><span role="img" aria-hidden="true">👨‍🍳</span> Our Cookbook</Link>
       <div className="nav__links">
         <Link to="/" className="nav__item">All Recipes</Link>
-        <Link to="/new-recipe/" className="nav__item">New Recipe</Link>
         <Link to="/random-recipe/" className="nav__item">Random Recipe</Link>
-        <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENTID}
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-          />
-        <GoogleLogout
+        {userId === '' ? (
+          <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENTID}
-              buttonText="Logout"
-              onLogoutSuccess={logout}
-            >
-        </GoogleLogout>
-
-        <p>Google ID: {accountId}</p>
-
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
+        ) : (
+          <React.Fragment>
+            <Link to="/new-recipe/" className="nav__item">New Recipe</Link>
+            <GoogleLogout
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENTID}
+                  buttonText="Logout"
+                  onLogoutSuccess={logout}
+                >
+            </GoogleLogout>
+          </React.Fragment>
+        )}
       </div>
     </div>
   );
