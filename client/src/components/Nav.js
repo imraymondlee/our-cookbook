@@ -7,6 +7,7 @@ const Nav = () => {
   const [{ userId }, dispatch] = useStateValue();
 
   const responseGoogle = (response) => {
+    console.log(userId);
     console.log(response);
     console.log("GoogleId:", response.googleId);
 
@@ -30,7 +31,7 @@ const Nav = () => {
       <div className="nav__links">
         <Link to="/" className="nav__item">All Recipes</Link>
         <Link to="/random-recipe/" className="nav__item">Random Recipe</Link>
-        {userId === '' ? (
+        {userId === undefined ? (
           <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENTID}
               buttonText="Login"
