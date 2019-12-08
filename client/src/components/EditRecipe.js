@@ -36,17 +36,24 @@ const EditRecipe = ({match}) => {
       setLink(data.recipe.link);
       let formattedIngredients = '';
       data.recipe.ingredients.forEach((ingredient)=> {
-        formattedIngredients += "*"+ingredient+"\n";
+        formattedIngredients += "•"+ingredient+"\n";
       });
       setIngredients(formattedIngredients);
 
       let formattedSteps = '';
       data.recipe.steps.forEach((step)=> {
-        formattedSteps += "*"+step+"\n";
+        formattedSteps += "•"+step+"\n";
       });
       setSteps(formattedSteps);
     }
   },[data]);
+
+  const handleEnterKeyPress = (e) => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      e.target.value += '\n•';
+    }
+  }
 
   const submit = (e) => {
     e.preventDefault();
@@ -54,11 +61,11 @@ const EditRecipe = ({match}) => {
 
     // Ingredients
     let cleanIngredients = ingredients.replace(/\n/g, "");
-    let ingredientsArray = cleanIngredients.split("*");
+    let ingredientsArray = cleanIngredients.split("•");
     ingredientsArray = ingredientsArray.slice(1,ingredientsArray.length);
     // Steps
     let cleanSteps = steps.replace(/\n/g, "");
-    let stepsArray = cleanSteps.split("*");
+    let stepsArray = cleanSteps.split("•");
     stepsArray = stepsArray.slice(1,stepsArray.length);
 
     // Image
@@ -142,11 +149,11 @@ const EditRecipe = ({match}) => {
         </div>
         <div className="form__field">
           <label className="form__label" htmlFor="ingredients">Ingredients</label>
-          <textarea id="ingredients" className="form__input" rows="10" value={ingredients} onChange={(e)=>setIngredients(e.target.value)} />
+          <textarea id="ingredients" className="form__input" rows="10" value={ingredients} onChange={(e)=>setIngredients(e.target.value)} onKeyPress={handleEnterKeyPress} />
         </div>
         <div className="form__field">
           <label className="form__label" htmlFor="steps">Steps</label>
-          <textarea id="steps" className="form__input" rows="10" value={steps} onChange={(e)=>setSteps(e.target.value)} />
+          <textarea id="steps" className="form__input" rows="10" value={steps} onChange={(e)=>setSteps(e.target.value)} onKeyPress={handleEnterKeyPress} />
         </div>
         <Link to="/" className="button button--secondary" style={{marginRight: '0.5rem'}}>Cancel</Link>
         <button className="button button--primary">Update</button>

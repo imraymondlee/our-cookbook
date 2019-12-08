@@ -8,7 +8,7 @@ import { ApolloProvider } from 'react-apollo';
 
 // Global State
 const initialState = {
-  userId: ''
+  userId: 'a'
 };
 const reducer = (state, action) => {
   switch (action.type) {
