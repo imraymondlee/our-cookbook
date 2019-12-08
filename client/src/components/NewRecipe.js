@@ -85,7 +85,7 @@ const NewRecipe = () => {
         contentLabel="Recipe Updated Modal"
       >
         {isSubmitting ? (
-          <h1>Saving...</h1>
+          <h1>Saving</h1>
         ) : (
           <React.Fragment>
             <h1>Recipe Saved</h1>

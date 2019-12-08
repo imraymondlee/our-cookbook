@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import {getRecipeQuery} from '../queries/queries';
 import { useQuery } from '@apollo/react-hooks';
 import { useStateValue } from '../state';
+import Loading from './Loading';
 
 const Recipe = ({match}) => {
   const [{ userId }, dispatch] = useStateValue();
   const { data, loading, error } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>ERROR</p>;
 
   const ingredientsList = data.recipe.ingredients.map(ingredient => {

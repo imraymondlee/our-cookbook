@@ -1,5 +1,6 @@
 import React from 'react';
 import RecipeCard from './RecipeCard';
+import Loading from './Loading';
 import {getRecipesQuery} from '../queries/queries';
 import { useQuery } from '@apollo/react-hooks';
 import { useStateValue } from '../state';
@@ -7,7 +8,7 @@ import { useStateValue } from '../state';
 const RecipeList = (props) => {
   const [{ userId }, dispatch] = useStateValue();
   const { data, loading, error } = useQuery(getRecipesQuery);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>ERROR: {error}</p>;
 
   const displayAll = () => {
