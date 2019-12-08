@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { useStateValue } from '../state';
 
 const Nav = () => {
+  const [navOpen, setNavOpen] = useState(false);
   const [{ userId }, dispatch] = useStateValue();
 
   const responseGoogle = (response) => {
@@ -25,10 +26,22 @@ const Nav = () => {
     });
   }
 
+  const toggleNav = () => {
+    console.log('clicked');
+    if(!navOpen) {
+      setNavOpen(true);
+    } else {
+      setNavOpen(false);
+    }
+  }
+
   return (
-    <div className="nav">
-      <Link to="/" className="nav__logo"><span role="img" aria-hidden="true">👨‍🍳</span> Our Cookbook</Link>
-      <div className="nav__links">
+    <nav className="nav">
+      <div className="nav__wrapper">
+        <Link to="/" className="nav__logo"><span role="img" aria-hidden="true">👨‍🍳</span> Our Cookbook</Link>
+        <button className="nav__hamburger" onClick={toggleNav}>Menu</button>
+      </div>
+      <div className={"nav__links " + (navOpen ? "nav__links--isOpen" : "")}>
         <Link to="/" className="nav__item">All Recipes</Link>
         <Link to="/random-recipe/" className="nav__item">Random Recipe</Link>
         {userId === undefined ? (
@@ -52,7 +65,7 @@ const Nav = () => {
           </React.Fragment>
         )}
       </div>
-    </div>
+    </nav>
   );
 }
 
