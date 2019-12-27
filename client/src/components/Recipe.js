@@ -13,13 +13,13 @@ const Recipe = ({match}) => {
 
   const ingredientsList = data.recipe.ingredients.map(ingredient => {
     return (
-      <li key={ingredient}>{ingredient}</li>
+      <li key={ingredient} className="single-recipe__list-item">{ingredient}</li>
     );
   });
 
   const stepsList = data.recipe.steps.map(step => {
     return (
-      <li key={step}>{step}</li>
+      <li key={step} className="single-recipe__list-item">{step}</li>
     );
   });
 
@@ -34,14 +34,14 @@ const Recipe = ({match}) => {
 
       <div className="single-recipe__ingredients">
         <h2>Ingredients</h2>
-        <ul>
+        <ul className="single-recipe__list">
           {ingredientsList}
         </ul>
       </div>
 
       <div className="single-recipe__steps">
         <h2>Steps</h2>
-        <ol>
+        <ol className="single-recipe__list">
           {stepsList}
         </ol>
       </div>
