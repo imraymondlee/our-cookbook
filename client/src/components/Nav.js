@@ -22,7 +22,7 @@ const Nav = () => {
     console.log('Logging Out');
     dispatch({
       type: 'login',
-      userId: ''
+      userId: undefined
     });
   }
 
