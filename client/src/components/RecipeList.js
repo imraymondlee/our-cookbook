@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { useStateValue } from '../state';
 
 const RecipeList = (props) => {
-  const [{ userId }, dispatch] = useStateValue();
+  const [{ userId }] = useStateValue();
   const { data, loading, error } = useQuery(getRecipesQuery);
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error}</p>;
@@ -28,6 +28,10 @@ const RecipeList = (props) => {
           <div key={recipe.id} className="recipe-grid__item">
             <RecipeCard id={recipe.id} name={recipe.name} image={recipe.image} />
           </div>
+        );
+      } else {
+        return(
+          <div></div>
         );
       }
     });

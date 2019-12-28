@@ -6,7 +6,7 @@ import { useStateValue } from '../state';
 import Loading from './Loading';
 
 const Recipe = ({match}) => {
-  const [{ userId }, dispatch] = useStateValue();
+  const [{ userId }] = useStateValue();
   const { data, loading, error } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
   if (loading) return <Loading />;
   if (error) return <p>ERROR</p>;

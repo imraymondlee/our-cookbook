@@ -21,7 +21,7 @@ const NewRecipe = () => {
   const [toHome, setToHome] = useState(false);
   const [modalIsOpen,setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [{ userId }, dispatch] = useStateValue();
+  const [{ userId }] = useStateValue();
 
   let fileInput = React.createRef();
 
@@ -56,7 +56,6 @@ const NewRecipe = () => {
           'Content-Type': 'multipart/form-data'
       }).then((res) => {
         // Returned image file name
-        console.log(res);
         fileName = res.data;
       }).then(() => {
         // GraphQL Mutation for the post

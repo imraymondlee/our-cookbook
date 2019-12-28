@@ -8,10 +8,6 @@ const Nav = () => {
   const [{ userId }, dispatch] = useStateValue();
 
   const responseGoogle = (response) => {
-    console.log(userId);
-    console.log(response);
-    console.log("GoogleId:", response.googleId);
-
     dispatch({
       type: 'login',
       userId: response.googleId
@@ -19,7 +15,6 @@ const Nav = () => {
   }
 
   const logout = () => {
-    console.log('Logging Out');
     dispatch({
       type: 'login',
       userId: undefined
@@ -27,7 +22,6 @@ const Nav = () => {
   }
 
   const toggleNav = () => {
-    console.log('clicked');
     if(!navOpen) {
       setNavOpen(true);
     } else {

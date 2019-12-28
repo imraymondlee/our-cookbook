@@ -10,7 +10,7 @@ import { useStateValue } from '../state';
 Modal.setAppElement(document.getElementById('root'));
 
 const EditRecipe = ({match}) => {
-  const [{ userId }, dispatch] = useStateValue();
+  const [{ userId }] = useStateValue();
   const { data } = useQuery(getRecipeQuery, {variables: {id: match.params.id}});
   const [submitForm] = useMutation(editRecipeMutation, { 
     onCompleted: () => {
@@ -46,7 +46,7 @@ const EditRecipe = ({match}) => {
       });
       setSteps(formattedSteps);
     }
-  },[data]);
+  },[data, userId]);
 
   const handleEnterKeyPress = (e) => {
     if(e.key === 'Enter'){
@@ -79,7 +79,6 @@ const EditRecipe = ({match}) => {
             'Content-Type': 'multipart/form-data'
         }).then((res) => {
           // Returned image file name
-          console.log(res);
           fileName = res.data;
         }).then(() => {
           // GraphQL Mutation for the post
@@ -96,12 +95,10 @@ const EditRecipe = ({match}) => {
 
   const openModal = () => {
     setIsOpen(true);
-    console.log('edit recipe modal: openModal');
   }
 
   const afterOpenModal = () => {
     setIsSubmitting(true); 
-    console.log('edit recipe modal: afterOpenModal');
   }
 
   const closeModal = () => {
